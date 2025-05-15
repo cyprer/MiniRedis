@@ -1,5 +1,8 @@
 package com.cypre.server;
 
+import com.cypre.server.handler.RespCommandHandler;
+import com.cypre.server.handler.RespDecoder;
+import com.cypre.server.handler.RespEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -15,6 +18,7 @@ import com.cypre.server.handler.StringHandler;
 public class RedisMiniServer implements RedisServer{
     private String host;
     private int port;
+    private com.cypre.server.core.RedisCore redisCore;
 
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
@@ -37,9 +41,9 @@ public class RedisMiniServer implements RedisServer{
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast(new StringDecoder());
-                        pipeline.addLast(new StringHandler());
-                        pipeline.addLast(new StringEncoder());
+                        pipeline.addLast(new RespDecoder());
+                        pipeline.addLast(new RespCommandHandler(redisCore));
+                        pipeline.addLast(new RespEncoder());
                     }
                 });
         try{

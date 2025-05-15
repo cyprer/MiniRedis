@@ -7,6 +7,6 @@ public class StringHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg){
         System.out.println("收到消息： "+ msg);
-        ctx.channel().writeAndFlush("+ojbk\r\n");
+        ctx.channel().writeAndFlush("+OK\r\n");
     }
 }
