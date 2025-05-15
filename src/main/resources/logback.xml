@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 设置 root logger 的默认日志级别为 INFO -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- 屏蔽 Netty 的 DEBUG 日志 -->
+    <logger name="io.netty" level="WARN"/>
+
+    <!-- 自己的业务包保持 INFO 级别 -->
+    <logger name="com.cypre" level="INFO"/>
+
+</configuration>
