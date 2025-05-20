@@ -207,7 +207,7 @@ public class Dict<K,V> {
                 DictEntry<K,V> next = entry.next;
 
                 int idx = keyIndex(entry.key, ht1.size);
-                entry.next = ht1.table[idx]; //头插法
+                entry.next = ht1.table[idx];
                 ht1.table[idx] = entry;
                 ht0.used--;
                 ht1.used++;

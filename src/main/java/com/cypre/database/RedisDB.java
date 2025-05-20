@@ -1,5 +1,6 @@
 package com.cypre.database;
 
+import com.cypre.datastructure.RedisBytes;
 import com.cypre.datastructure.RedisData;
 import com.cypre.internal.Dict;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Setter
 @Getter
 public class RedisDB {
-    private final Dict<byte[], RedisData> data;
+    private final Dict<RedisBytes, RedisData> data;
 
     private final int id;
 
@@ -19,19 +20,19 @@ public class RedisDB {
         this.data = new Dict<>();
     }
 
-    public Set<byte[]> keys(){
+    public Set<RedisBytes> keys(){
         return data.keySet();
     }
 
-    public boolean exist(byte[] key){
+    public boolean exist(RedisBytes key){
         return data.containsKey(key);
     }
 
-    public void put(byte[] key, RedisData value){
+    public void put(RedisBytes key, RedisData value){
         data.put(key, value);
     }
 
-    public RedisData get(byte[] key){
+    public RedisData get(RedisBytes key){
         return data.get(key);
     }
 

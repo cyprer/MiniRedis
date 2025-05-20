@@ -1,5 +1,6 @@
 package com.cypre.server.handler;
 
+import com.cypre.datastructure.RedisBytes;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.Getter;
@@ -41,8 +42,8 @@ public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
 
         try{
             Resp[] array = respArray.getContent();
-            String commandName = new String(((BulkString)array[0]).getContent());
-            commandName = commandName.toUpperCase();
+            RedisBytes cmd = ((BulkString)array[0]).getContent();
+            String commandName = cmd.getString().toUpperCase();
             CommandType commandType;
 
             try{
@@ -56,10 +57,9 @@ public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
             Resp result = command.handle();
 
             return result;
-            }catch (Exception e){
-                log.error("命令执行失败",e);
-                return new Errors("命令执行失败");
-            }
+        }catch (Exception e){
+            log.error("命令执行失败",e);
+            return new Errors("命令执行失败");
         }
+    }
 }
-

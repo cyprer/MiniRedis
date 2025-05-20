@@ -1,12 +1,13 @@
 package com.cypre.server.core;
 
 import com.cypre.database.RedisDB;
+import com.cypre.datastructure.RedisBytes;
 import com.cypre.datastructure.RedisData;
 
 import java.util.List;
 import java.util.Set;
 
-public class RedisCoreImpl implements RedisCore{
+public class RedisCoreImpl implements RedisCore {
     private final List<RedisDB> databases;
 
     private final int dbNum;
@@ -21,20 +22,20 @@ public class RedisCoreImpl implements RedisCore{
     }
 
     @Override
-    public Set<byte[]> keys() {
+    public Set<RedisBytes> keys() {
         int dbIndex = getCurrentDBIndex();
         RedisDB db = databases.get(dbIndex);
         return db.keys();
     }
 
     @Override
-    public void put(byte[] key, RedisData value) {
+    public void put(RedisBytes key, RedisData value) {
         RedisDB db = databases.get(getCurrentDBIndex());
         db.put(key, value);
     }
 
     @Override
-    public RedisData get(byte[] key) {
+    public RedisData get(RedisBytes key) {
         RedisDB db = databases.get(getCurrentDBIndex());
         if(db.exist(key)){
             return db.get(key);
