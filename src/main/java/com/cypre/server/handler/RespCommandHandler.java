@@ -1,6 +1,8 @@
 package com.cypre.server.handler;
 
 import com.cypre.datastructure.RedisBytes;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import com.cypre.server.core.RedisCore;
 
 @Slf4j
 @Getter
+@Sharable
 public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
 
     private final RedisCore redisCore;
