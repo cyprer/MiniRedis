@@ -12,6 +12,8 @@ import com.cypre.command.Impl.list.Lrange;
 import com.cypre.command.Impl.hash.Hset;
 import com.cypre.command.Impl.hash.Hget;
 import com.cypre.command.Impl.hash.Hdel;
+import com.cypre.command.Impl.zset.Zadd;
+import com.cypre.command.Impl.zset.Zrange;
 import lombok.Getter;
 import com.cypre.server.core.RedisCore;
 import java.util.function.Function;
@@ -29,8 +31,9 @@ public enum CommandType {
     LRANGE(Lrange::new),
     HSET(Hset::new),
     HGET(Hget::new),
-    HDEL(Hdel::new);
-
+    HDEL(Hdel::new),
+    ZADD(Zadd::new),
+    ZRANGE(Zrange::new);
 
     private final Function<RedisCore, Command> supplier;
 
