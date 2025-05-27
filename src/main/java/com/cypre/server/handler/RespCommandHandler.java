@@ -1,5 +1,6 @@
 package com.cypre.server.handler;
 
+import com.cypre.aof.AofManager;
 import com.cypre.datastructure.RedisBytes;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -20,9 +21,12 @@ import com.cypre.server.core.RedisCore;
 @Sharable
 public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
 
+    private AofManager aofManager;
+
     private final RedisCore redisCore;
-    public RespCommandHandler(RedisCore redisCore) {
+    public RespCommandHandler(RedisCore redisCore, AofManager aofManager) {
         this.redisCore = redisCore;
+        this.aofManager = aofManager;
     }
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Resp msg) throws Exception {
@@ -58,7 +62,9 @@ public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
             Command command = commandType.getSupplier().apply(redisCore);
             command.setContext(array);
             Resp result = command.handle();
-
+            if(aofManager !=null){
+                aofManager.append(respArray);
+            }
             return result;
         }catch (Exception e){
             log.error("命令执行失败",e);
