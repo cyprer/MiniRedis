@@ -60,7 +60,7 @@ public class SkipList  <T extends Comparable<T>>{
 
         for(i = level - 1; i >= 0; i--){
             rank[i] = i == level - 1 ? 0 : rank[i + 1];
-            getPosition(score,member,x,i,update);
+            x = getPosition(score,member,x,i,update);
             update[i] =x;
         }
 

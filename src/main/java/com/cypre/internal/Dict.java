@@ -53,7 +53,7 @@ public class Dict<K,V> {
         int sizemask;
         int used;
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")  //创建泛型数组编译器会警告,这个注解告诉编译器忽略警告,因为我们知道这个转换是安全的
         DictHashTable(int size)
         {
             this.table = (DictEntry<K, V>[]) new DictEntry[size];

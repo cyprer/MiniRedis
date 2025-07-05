@@ -49,4 +49,8 @@ public class Srem implements Command {
         }
         return new RespInteger(count);
     }
+    @Override
+    public boolean isWriteCommand() {
+        return true;
+    }
 }

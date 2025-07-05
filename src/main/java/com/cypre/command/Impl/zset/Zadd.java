@@ -63,4 +63,8 @@ public class Zadd implements Command {
             return new Errors("ERR " + e.getMessage());
         }
     }
+    @Override
+    public boolean isWriteCommand() {
+        return true;
+    }
 }

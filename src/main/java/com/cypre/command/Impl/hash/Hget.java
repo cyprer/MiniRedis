@@ -43,4 +43,8 @@ public class Hget implements Command {
         }
         return new Errors("key not hash");
     }
+    @Override
+    public boolean isWriteCommand() {
+        return false;
+    }
 }

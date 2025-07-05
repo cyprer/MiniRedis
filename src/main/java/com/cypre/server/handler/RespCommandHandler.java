@@ -62,7 +62,7 @@ public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
             Command command = commandType.getSupplier().apply(redisCore);
             command.setContext(array);
             Resp result = command.handle();
-            if(aofManager !=null){
+            if(aofManager !=null && command.isWriteCommand()){
                 aofManager.append(respArray);
             }
             return result;

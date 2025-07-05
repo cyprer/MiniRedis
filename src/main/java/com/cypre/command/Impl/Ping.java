@@ -21,4 +21,9 @@ public class Ping implements Command {
     public Resp handle() {
         return new SimpleString("PONGPONGPONGSAHUR");
     }
+
+    @Override
+    public boolean isWriteCommand() {
+        return false;
+    }
 }

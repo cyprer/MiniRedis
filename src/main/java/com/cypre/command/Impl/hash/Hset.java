@@ -56,4 +56,8 @@ public class Hset implements Command {
         }
         return new Errors("参数错误");
     }
+    @Override
+    public boolean isWriteCommand() {
+        return true;
+    }
 }

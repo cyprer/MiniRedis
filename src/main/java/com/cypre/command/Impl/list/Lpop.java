@@ -44,7 +44,9 @@ public class Lpop implements Command {
             return new BulkString(lpop);
         }
         return new Errors("命令执行失败");
-
-
+    }
+    @Override
+    public boolean isWriteCommand() {
+        return true;
     }
 }

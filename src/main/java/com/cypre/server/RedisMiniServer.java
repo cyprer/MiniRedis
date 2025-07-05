@@ -42,7 +42,7 @@ public class RedisMiniServer implements RedisServer{
     private RedisCore redisCore;
 
 
-    public RedisMiniServer(String host, int port) throws FileNotFoundException {
+    public RedisMiniServer(String host, int port) throws Exception {
         this.host = host;
         this.port = port;
         this.bossGroup = new NioEventLoopGroup(1);
@@ -51,7 +51,9 @@ public class RedisMiniServer implements RedisServer{
         this.redisCore = new RedisCoreImpl(DEFAULT_DBCOUNT);
         this.aofManager = null;
         if(ENABLE_AOF){
-            this.aofManager = new AofManager("redis.aof");
+            this.aofManager = new AofManager("redis.aof",redisCore);
+            aofManager.load();
+            Thread.sleep(500);
         }
         this.commandHandler = new RespCommandHandler(redisCore, aofManager);
     }
@@ -94,11 +96,15 @@ public class RedisMiniServer implements RedisServer{
             if(bossGroup != null){
                 bossGroup.shutdownGracefully().sync();
             }
+            if(aofManager != null){
+                aofManager.close();
+            }
         }catch(InterruptedException e){
             log.error("Redis server stop error", e);
             Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
 
     }
 }
